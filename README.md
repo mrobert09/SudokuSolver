@@ -13,10 +13,11 @@ Here is an example of the 8/24/21 Sudoku puzzle from the New York Times:
 
 <img src="./imgs/NYT.PNG" width="500" height="500">
 
-This puzzle would translate in a string interpetation as "438209061/206008040/001036270/000052400/080900020/320040680/000701802/792600000/005000706". This outputs to the Python console as:
+This puzzle would translate in a string interpetation as:
+"438209061/206008040/001036270/000052400/080900020/320040680/000701802/792600000/005000706". 
 
+This outputs to the Python console as:
 ![](./imgs/unsolvedOutput.PNG)
 
 Which, once solved, outputs as:
-
 ![](./imgs/solvedOutput.PNG)
