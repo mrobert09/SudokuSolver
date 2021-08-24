@@ -17,7 +17,9 @@ This puzzle would translate in a string interpetation as:
 "438209061/206008040/001036270/000052400/080900020/320040680/000701802/792600000/005000706". 
 
 This outputs to the Python console as:
+
 ![](./imgs/unsolvedOutput.PNG)
 
 Which, once solved, outputs as:
+
 ![](./imgs/solvedOutput.PNG)
