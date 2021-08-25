@@ -56,12 +56,12 @@ class SudokuSolver:
             debug += 1  # used to jump forward in debugging
             row, col = next_coord
             puzzle[row][col] = self.find_valid(next_coord)
-            if puzzle[row][col] != 0:
-                self._stack.append(next_coord)
+            if puzzle[row][col] != 0:  # if a valid number was found
+                self._stack.append(next_coord)  # keeps of stack of all cells solved
                 next_coord = self.find_next()
-                if not next_coord:  # if next_coord invalid because board is not solved
+                if not next_coord:  # if next_coord invalid because board is solved
                     self._solved = True
-            else:
+            else:  # if cell became 0, then previous numbers are incorrect. Starts backtracking through stack.
                 next_coord = self._stack.pop()
 
     def find_valid(self, coord):
@@ -73,10 +73,12 @@ class SudokuSolver:
         row, col = coord
         num = self._puzzle[row][col] + 1
         while num < 10:
+            # Checks if number satisfies the row, column, and square rules (no repeats) of Sudoku
             if self.check_row(num, row) and self.check_column(num, col) and self.check_square(num, row, col):
                 return num
             else:
                 num += 1
+        # If all numbers 1-9 are checked and no numbers are valid, return 0
         return 0
 
     def check_row(self, num, row):
@@ -104,7 +106,14 @@ class SudokuSolver:
 
     def check_square(self, num, row, col):
         """
-        Verified that number is not already present in the box.
+        Verified that number is not already present in the box. Identifies square (not cell) rows and columns. Rows
+        and columns range from 0-2. For example, square 0 would be in grid_row 0 and grid_column 0, square 3 would
+        be in grid_row 1 and grid_column 0. Layout is as follows:
+
+        0 1 2
+        3 4 5
+        6 7 8
+
         :param num: number being checked
         :param row: row the number is in
         :param col: column the number is in
@@ -113,8 +122,11 @@ class SudokuSolver:
         box = self.identify_box(row, col)
         grid_row = int(box/3)
         grid_col = box%3
+
+        # Python list comprehension to isolate only cells inside square.
         numbers_in_box = [num for row in self._puzzle[grid_row*3:grid_row*3+3]
                           for num in row[grid_col*3:grid_col*3+3]]
+
         if num in numbers_in_box:
             return False
         return True
