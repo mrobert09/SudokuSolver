@@ -53,9 +53,7 @@ class SudokuSolver:
         puzzle = self._puzzle
         next_coord = self.find_next()
         while not self._solved:
-            debug += 1
-            # print()
-            # self.display_puzzle()
+            debug += 1  # used to jump forward in debugging
             row, col = next_coord
             puzzle[row][col] = self.find_valid(next_coord)
             if puzzle[row][col] != 0:
