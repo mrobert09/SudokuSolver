@@ -46,7 +46,7 @@ class SudokuSolver:
 
     def solve(self):
         """
-        Solves the sudoku puzzle used a backtracking algorithm.
+        Solves the sudoku puzzle using a backtracking algorithm.
         :return: None
         """
         debug = 0
