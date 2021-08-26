@@ -3,6 +3,7 @@ Basic Sudoku puzzle solver using backtracking algorithm.
 
 ## Technologies
 Python 3.8
+PyGame Library
 
 ## Approach
 This uses a basic backtracking algorithm to solve any standard rules Sudoku puzzle. It takes as an input a string representation of a Sudoku puzzle, displays in the output the Sudoku layout of that puzzle, then displays the solved solution.
