@@ -23,3 +23,7 @@ This outputs to the Python console as:
 Which, once solved, outputs as:
 
 ![](./imgs/solvedOutput.PNG)
+
+This can be seen graphically through the gui.py file. Here is an example of it solving the puzzle above:
+
+<img src="./imgs/guiSolver.gif" width="500" height="500">
