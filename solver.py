@@ -4,6 +4,7 @@ class SudokuSolver:
         self._str = str
         self._puzzle = self.generate_list(self._str)
         self._stack = []
+        self._last_value = None
         self._solved = False
         self.display_puzzle()
         print()
@@ -27,6 +28,9 @@ class SudokuSolver:
             sudoku_puzzle.append(row)  # appends the last row since it has no '/'
         return sudoku_puzzle
 
+    def get_list(self):
+        return self._puzzle
+
     def display_puzzle(self):
         """
         Displays puzzle in output for easy viewing.
@@ -49,20 +53,60 @@ class SudokuSolver:
         Solves the sudoku puzzle using a backtracking algorithm.
         :return: None
         """
-        debug = 0
-        puzzle = self._puzzle
         next_coord = self.find_next()
         while not self._solved:
-            debug += 1  # used to jump forward in debugging
+            next_num = self.solve_next(next_coord)
+            if next_num == 0:
+                next_coord = self._stack.pop()
+            else:
+                next_coord = self.find_next()
+
+    def solve_next(self, coord):
+        """
+        Solves next position.
+        :param coord: grid position to be solved
+        :return:
+        """
+        puzzle = self._puzzle
+        row, col = coord
+        puzzle[row][col] = self.find_valid(coord)
+        if puzzle[row][col] != 0:  # if a valid number was found
+            self._stack.append(coord)  # keeps of stack of all cells solved
+            next_coord = self.find_next()
+            if not next_coord:
+                self._solved = True
+        return puzzle[row][col]
+
+    def slow_solve(self):
+        """
+        Used in GUI to solve slower than method above (step by step).
+        :return:
+        """
+        if self._solved == False:
+            puzzle = self._puzzle
+            if self._last_value == 0:
+                next_coord = self._stack.pop()
+            else:
+                next_coord = self.find_next()
+                if not next_coord:
+                    self._solved = True
+                    return
             row, col = next_coord
             puzzle[row][col] = self.find_valid(next_coord)
-            if puzzle[row][col] != 0:  # if a valid number was found
-                self._stack.append(next_coord)  # keeps of stack of all cells solved
-                next_coord = self.find_next()
-                if not next_coord:  # if next_coord invalid because board is solved
-                    self._solved = True
-            else:  # if cell became 0, then previous numbers are incorrect. Starts backtracking through stack.
-                next_coord = self._stack.pop()
+            if puzzle[row][col] != 0:
+                self._stack.append(next_coord)
+            self._last_value = puzzle[row][col]
+
+    def find_next(self):
+        """
+        Returns the next cell that is empty (0) or cell to revisit, whichever comes first.
+        :return: (row, col) tuple of next empty cell
+        """
+        for row in range(9):
+            for col in range(9):
+                if self._puzzle[row][col] == 0:
+                    return (row, col)
+        return False
 
     def find_valid(self, coord):
         """
@@ -160,21 +204,10 @@ class SudokuSolver:
             elif col < 9:
                 return 8
 
-    def find_next(self):
-        """
-        Returns the next cell that is empty (0).
-        :return: (row, col) tuple of next empty cell
-        """
-        for row in range(9):
-            for col in range(9):
-                if self._puzzle[row][col] == 0:
-                    return (row, col)
-        return False
-
 
 def main():
-    s_string = "400003510/300092806/819040000/002009180/708300050/041087900/060730205/070205000/200900031"
-    s_string2 = "000890040/000002008/508040200/093274610/150060784/674000923/029085000/761400850/080026390"
+    # s_string = "400003510/300092806/819040000/002009180/708300050/041087900/060730205/070205000/200900031"
+    # s_string2 = "000890040/000002008/508040200/093274610/150060784/674000923/029085000/761400850/080026390"
     s_string3 = "438209061/206008040/001036270/000052400/080900020/320040680/000701802/792600000/005000706"
     s = SudokuSolver(s_string3)
     s.solve()
