@@ -3,6 +3,7 @@ Basic Sudoku puzzle solver using backtracking algorithm.
 
 ## Technologies
 Python 3.8
+
 PyGame Library
 
 ## Approach
