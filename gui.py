@@ -16,6 +16,7 @@ class Game:
         self.clock = pg.time.Clock()
         self.font = pg.font.Font(font_name, font_size)
         self.solver = SudokuSolver(s_string)
+        self.frame_count = 0
         self.running = True
 
     def new(self):
@@ -54,7 +55,9 @@ class Game:
         Game Loop - Update. Updates the data on each frame.
         :return:
         """
-        self.solver.slow_solve()
+        self.frame_count += 1
+        if self.frame_count >= 10:
+            self.solver.slow_solve()
 
     def draw_grid(self):
         """
